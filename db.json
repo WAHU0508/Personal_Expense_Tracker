@@ -1,0 +1,66 @@
+{
+  "expenses": [
+    {
+      "id": "3772",
+      "category": "Transport",
+      "description": "Uber",
+      "amount": "1000",
+      "date": "2024-07-09"
+    },
+    {
+      "id": "fabe",
+      "category": "Entertainment",
+      "description": "Netflix",
+      "amount": "2",
+      "date": "2024-07-12"
+    },
+    {
+      "id": "30aa",
+      "category": "Personal Care",
+      "description": "face gel",
+      "amount": "2500",
+      "date": "2024-07-18"
+    },
+    {
+      "id": "9732",
+      "category": "Utilities",
+      "description": "water",
+      "amount": "500",
+      "date": "2024-07-03"
+    },
+    {
+      "id": "eef6",
+      "category": "Other",
+      "description": "Lending",
+      "amount": "2000",
+      "date": "2024-07-16"
+    },
+    {
+      "id": "a2ca",
+      "category": "Entertainment",
+      "description": "Showmax",
+      "amount": "300",
+      "date": "2024-07-09"
+    },
+    {
+      "id": "f82d",
+      "category": "Groceries",
+      "description": "Cereals",
+      "amount": "570",
+      "date": "2024-07-09"
+    },
+    {
+      "id": "a76d",
+      "category": "Entertainment",
+      "description": "spotify",
+      "amount": "500",
+      "date": "2024-07-30"
+    }
+  ],
+  "budget": [
+    {
+      "id": "1",
+      "monthlyBudget": "30000"
+    }
+  ]
+}
