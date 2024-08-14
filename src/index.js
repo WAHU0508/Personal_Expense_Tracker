@@ -90,16 +90,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Calculate and display the remaining budget
     function calculateRemainingBudget(totalExpenses) {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser')); // Get the logged-in user
+    
         // Function to update remaining budget
         const updateRemainingBudget = () => {
             const remainingBudget = monthlyBudget - totalExpenses;
             remainingBudgetDisplay.textContent = `Remaining Budget: $${remainingBudget.toFixed(2)}`;
         };
-      if (totalExpenses>=monthlyBudget){
-        alert("Oops!Unfortunately it looks like you have exhausted your monthly budget.")
-      }
-        // Initial fetch to get the budget from the server and set up the event listener
-        fetch('http://localhost:3000/budget/1')
+    
+        if (totalExpenses >= monthlyBudget) {
+            alert("Oops! Unfortunately, it looks like you have exhausted your monthly budget.");
+        }
+    
+        // Fetch the budget using the current user's budget ID
+        fetch(`http://localhost:3000/budget/${currentUser.budget}`)
             .then(res => res.json())
             .then(data => {
                 monthlyBudget = parseFloat(data.monthlyBudget); // Initialize monthlyBudget from the server data
@@ -118,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (e.key === 'Enter') {
                             const newBudget = editBudget.value.trim();
                             if (newBudget !== '' && newBudget !== myMonthlyBudget.textContent) {
-                                fetch('http://localhost:3000/budget/1', {
+                                fetch(`http://localhost:3000/budget/${currentUser.budget}`, {
                                     method: 'PATCH',
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -141,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => console.error(`Error fetching budget: ${error}`));
     }
+    
     
     
 

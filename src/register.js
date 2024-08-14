@@ -4,6 +4,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
     const name = document.getElementById('registerName').value;
     const email = document.getElementById('registerEmail').value;
     const password = document.getElementById('registerPassword').value;
+    const initialBudget = 20000; // Default monthly budget amount for new users
 
     fetch('http://localhost:3000/users')
         .then(response => response.json())
@@ -15,14 +16,25 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                 return;
             }
 
+            // Generate unique IDs for the user and budget
+            const userId = generateUniqueId();
+            const budgetId = generateUniqueId();
+
             // Create new user
             const newUser = {
-                id: generateUniqueId(), // Implement a function to generate a unique ID
+                id: userId,
                 name: name,
                 email: email,
                 password: password,
                 expenses: [],  // Initialize with an empty array
-                budget: {}     // Initialize with an empty object
+                budget: budgetId // Link budget ID here
+            };
+
+            // Create new budget
+            const newBudget = {
+                id: budgetId,
+                monthlyBudget: initialBudget,
+                userId: userId // Link the user ID here
             };
 
             // Send POST request to add new user
@@ -35,9 +47,21 @@ document.getElementById('registerForm').addEventListener('submit', function(even
             })
             .then(response => response.json())
             .then(user => {
+                // Send POST request to add the budget
+                return fetch('http://localhost:3000/budget', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newBudget)
+                });
+            })
+            .then(response => response.json())
+            .then(budget => {
                 alert('Registration successful!');
                 // Optionally handle successful registration (e.g., redirect to login)
-            });
+            })
+            .catch(error => console.error('Error:', error));
         });
 });
 

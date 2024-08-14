@@ -1,3 +1,30 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    // Elements to be controlled based on login status
+    const loginForm = document.getElementById('loginForm');
+    const logoutButton = document.getElementById('logoutButton');
+    const contentSections = document.querySelectorAll('.content'); // Assuming content sections have the class 'content'
+
+    // Hide or show elements based on login status
+    if (currentUser && currentUser.id) {
+        // User is logged in
+        loginForm.style.display = 'none';
+        logoutButton.style.display = 'block';
+        contentSections.forEach(section => section.style.display = 'block'); // Show content
+
+        // Load and display user-specific data
+        loadUserExpenses(currentUser.id);
+    } else {
+        // User is not logged in
+        loginForm.style.display = 'block';
+        logoutButton.style.display = 'none';
+        contentSections.forEach(section => section.style.display = 'none'); // Hide content
+
+        alert('Please log in to continue.');
+    }
+});
+
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -16,6 +43,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('logoutButton').style.display = 'block';
+                document.querySelectorAll('.content').forEach(section => section.style.display = 'block'); // Show content
                 alert('Login successful!');
                 loadUserExpenses(user.id);
             } else {
@@ -34,32 +62,18 @@ function loadUserExpenses(userId) {
             console.log('Fetched expenses:', expenses);
             const userExpenses = expenses.filter(expense => expense.userId === userId);
             displayExpenses(userExpenses);
+
+            // Close the login modal after successful login
+            const loginModal = document.getElementById('loginModal');
+            if (loginModal) {
+                loginModal.style.display = 'none';
+            }
         })
         .catch(error => {
             console.error('Error fetching expenses:', error);
         });
 }
 
-// Ensure that the expenseList element exists
-function ensureExpenseList() {
-    const expenseTable = document.getElementById('expensesTable');
-    
-    if (!expenseTable) {
-        console.error('Error: Expenses table container element does not exist.');
-        return null;
-    }
-    
-    let expenseList = document.querySelector('#expensesTable table tbody');
-    
-    if (!expenseList) {
-        // Create the element if it does not exist
-        expenseList = document.createElement('tbody');
-        document.querySelector('#expensesTable table').appendChild(expenseList);
-    }
-    return expenseList;
-}
-
-// Function to display expenses
 function displayExpenses(expenses) {
     const expenseList = ensureExpenseList();
     
@@ -83,54 +97,28 @@ function displayExpenses(expenses) {
     });
 }
 
-// Example usage of loadUserExpenses
-function loadUserExpenses(userId) {
-    fetch('http://localhost:3000/expenses')
-        .then(response => response.json())
-        .then(expenses => {
-            console.log('Fetched expenses:', expenses);
-            const userExpenses = expenses.filter(expense => expense.userId === userId);
-            displayExpenses(userExpenses);
-        })
-        .catch(error => {
-            console.error('Error fetching expenses:', error);
-        });
+function ensureExpenseList() {
+    const expenseTable = document.getElementById('expensesTable');
+    
+    if (!expenseTable) {
+        console.error('Error: Expenses table container element does not exist.');
+        return null;
+    }
+    
+    let expenseList = document.querySelector('#expensesTable table tbody');
+    
+    if (!expenseList) {
+        expenseList = document.createElement('tbody');
+        document.querySelector('#expensesTable table').appendChild(expenseList);
+    }
+    return expenseList;
 }
+
 function logout() {
     localStorage.removeItem('currentUser');
     document.getElementById('loginForm').style.display = 'block';
     document.getElementById('logoutButton').style.display = 'none';
+    document.querySelectorAll('.content').forEach(section => section.style.display = 'none'); // Hide content
     alert('You have been logged out!');
     location.reload();
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-    if (currentUser && currentUser.id) {
-        document.getElementById('loginForm').style.display = 'none';
-        document.getElementById('logoutButton').style.display = 'block';
-        alert(`Welcome back, ${currentUser.name}!`);
-        loadUserExpenses(currentUser.id);
-    } else {
-        document.getElementById('loginForm').style.display = 'block';
-        document.getElementById('logoutButton').style.display = 'none';
-        alert('Please log in to continue.');
-    }
-});
-
-// Check if user is logged in
-document.addEventListener('DOMContentLoaded', function() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-    if (currentUser && currentUser.id) {
-        document.getElementById('loginForm').style.display = 'none';
-        document.getElementById('logoutButton').style.display = 'block';
-        alert(`Welcome back, ${currentUser.name}!`);
-        loadUserExpenses(currentUser.id);
-    } else {
-        document.getElementById('loginForm').style.display = 'block';
-        document.getElementById('logoutButton').style.display = 'none';
-        alert('Please log in to continue.');
-    }
-});

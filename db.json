@@ -26,7 +26,7 @@
       "email": "gridge3@gmail.com",
       "password": "123",
       "expenses": [],
-      "budget": {}
+      "budget": "3"
     }
   ],
   "expenses": [
@@ -74,13 +74,18 @@
   "budget": [
     {
       "id": "1",
-      "monthlyBudget": "30000",
+      "monthlyBudget": "40000",
       "userId": "1"
     },
     {
       "id": "2",
       "monthlyBudget": "25000",
       "userId": "2"
+    },
+    {
+      "id": "3",
+      "monthlyBudget": "50000",
+      "userId": "_yy1ndkifv"
     }
   ]
 }
