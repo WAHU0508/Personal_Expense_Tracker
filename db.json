@@ -1,73 +1,68 @@
 {
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "password123",
+      "expenses": [
+        "da24",
+        "06f2"
+      ],
+      "budget": "1"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "password": "456",
+      "expenses": [],
+      "budget": "2"
+    },
+    {
+      "id": "_yy1ndkifv",
+      "name": "Ian ",
+      "email": "gridge3@gmail.com",
+      "password": "123",
+      "expenses": [],
+      "budget": {}
+    }
+  ],
   "expenses": [
     {
-      "id": "3772",
+      "id": "da24",
       "category": "Transport",
-      "description": "Uber",
-      "amount": "1000",
-      "date": "2024-07-09"
+      "description": "work",
+      "amount": "1500",
+      "date": "2024-08-10",
+      "userId": "1"
     },
     {
-      "id": "fabe",
-      "category": "Entertainment",
-      "description": "Netflix",
-      "amount": "2",
-      "date": "2024-07-12"
-    },
-    {
-      "id": "30aa",
-      "category": "Personal Care",
-      "description": "face gel",
-      "amount": "2500",
-      "date": "2024-07-18"
-    },
-    {
-      "id": "9732",
-      "category": "Utilities",
-      "description": "water",
-      "amount": "500",
-      "date": "2024-07-03"
-    },
-    {
-      "id": "eef6",
-      "category": "Other",
-      "description": "Lending",
-      "amount": "2000",
-      "date": "2024-07-16"
-    },
-    {
-      "id": "a2ca",
-      "category": "Entertainment",
-      "description": "Showmax",
-      "amount": "300",
-      "date": "2024-07-09"
-    },
-    {
-      "id": "f82d",
+      "id": "06f2",
       "category": "Groceries",
-      "description": "Cereals",
-      "amount": "570",
-      "date": "2024-07-09"
+      "description": "Grants",
+      "amount": "1500",
+      "date": "2024-08-09",
+      "userId": "1"
     },
     {
-      "id": "a76d",
+      "id": "3bd1",
       "category": "Entertainment",
-      "description": "spotify",
+      "description": "spotify ",
       "amount": "500",
-      "date": "2024-07-30"
-    },
-    {
-      "id": "4018",
-      "category": "Personal Care",
-      "description": "food",
-      "amount": "24000",
-      "date": "2024-08-09"
+      "date": "2024-08-02"
     }
   ],
   "budget": [
     {
       "id": "1",
-      "monthlyBudget": "30000"
+      "monthlyBudget": "30000",
+      "userId": "1"
+    },
+    {
+      "id": "2",
+      "monthlyBudget": "25000",
+      "userId": "2"
     }
   ]
 }

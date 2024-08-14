@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             category,
             description,
             amount,
-            date
+            date,
         };
 
         postExpense(newExpense);
