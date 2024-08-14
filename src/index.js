@@ -321,35 +321,42 @@ function postExpense(newExpense) {
             .catch(error => console.error(`Error updating expense: ${error}`));
     }
 
-    // Toggle the selection of an expense in order to delete entry
     function toggleExpenseSelection(expenseId, isSelected) {
         if (isSelected) {
-            selectedExpenses.push(expenseId);
-        } else {
-            const index = selectedExpenses.indexOf(expenseId);
-            if (index !== -1) {
-                selectedExpenses.splice(index, 1);
+            if (!selectedExpenses.includes(expenseId)) {
+                selectedExpenses.push(expenseId);
+                console.log(`Added ${expenseId} to selection.`);
             }
+        } else {
+            selectedExpenses = selectedExpenses.filter(id => id !== expenseId);
+            console.log(`Removed ${expenseId} from selection.`);
         }
-        deleteButton.disabled = selectedExpenses.length === 0;
+        deleteButton.disabled = selectedExpenses.length === 0; // Enable or disable button based on selection
+        console.log(`Delete button status: ${deleteButton.disabled}`);
     }
-
-    // Delete selected expenses
+    
     function deleteSelectedExpenses() {
+        if (selectedExpenses.length === 0) {
+            alert('No expenses selected for deletion.');
+            return;
+        }
+        
+        console.log(`Deleting expenses: ${selectedExpenses}`);
         selectedExpenses.forEach(expenseId => {
             deleteExpense(expenseId);
         });
         selectedExpenses = [];
-        deleteButton.disabled = true;
+        deleteButton.disabled = true; // Disable button after deletion
     }
-
-    // Update server when an entry is deleted by user
+    
     function deleteExpense(expenseId) {
+        console.log(`Deleting expense with ID: ${expenseId}`);
         fetch(`http://localhost:3000/expenses/${expenseId}`, {
             method: 'DELETE'
         })
             .then(() => {
                 expenses = expenses.filter(expense => expense.id !== expenseId);
+                console.log(`Deleted expense with ID: ${expenseId}`);
                 displayExpenses();
                 updateSummary(); // Update summary after deleting expense
             })
