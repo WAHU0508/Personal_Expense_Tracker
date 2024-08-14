@@ -35,6 +35,14 @@
       "password": "789",
       "expenses": [],
       "budget": "_qrtr5s4yi"
+    },
+    {
+      "id": "_88i3ctll3",
+      "name": "Billy",
+      "email": "bazu@gmail.com",
+      "password": "648300",
+      "expenses": [],
+      "budget": "_e1le0k20e"
     }
   ],
   "expenses": [
@@ -69,6 +77,14 @@
       "amount": "1500",
       "date": "2024-08-14",
       "userId": "_yy1ndkifv"
+    },
+    {
+      "id": "fe43",
+      "category": "Groceries",
+      "description": "5kg",
+      "amount": "4500",
+      "date": "2024-08-06",
+      "userId": "_88i3ctll3"
     }
   ],
   "budget": [
@@ -96,6 +112,11 @@
       "id": "_qrtr5s4yi",
       "monthlyBudget": 20000,
       "userId": "_tyoaoh261"
+    },
+    {
+      "id": "_e1le0k20e",
+      "monthlyBudget": 20000,
+      "userId": "_88i3ctll3"
     }
   ]
 }
