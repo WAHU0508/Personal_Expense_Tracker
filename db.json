@@ -27,6 +27,14 @@
       "password": "123",
       "expenses": [],
       "budget": "3"
+    },
+    {
+      "id": "_tyoaoh261",
+      "name": "gridge",
+      "email": "gridge37@gmail.com",
+      "password": "789",
+      "expenses": [],
+      "budget": "_qrtr5s4yi"
     }
   ],
   "expenses": [
@@ -78,6 +86,16 @@
       "id": "3",
       "monthlyBudget": "50000",
       "userId": "_yy1ndkifv"
+    },
+    {
+      "id": "_0jn7t9im7",
+      "monthlyBudget": 20000,
+      "userId": "_2z84l63v1"
+    },
+    {
+      "id": "_qrtr5s4yi",
+      "monthlyBudget": 20000,
+      "userId": "_tyoaoh261"
     }
   ]
 }

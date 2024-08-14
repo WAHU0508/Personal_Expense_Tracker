@@ -38,7 +38,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
             };
 
             // Send POST request to add new user
-            fetch('http://localhost:3000/users', {
+            return fetch('http://localhost:3000/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -59,6 +59,12 @@ document.getElementById('registerForm').addEventListener('submit', function(even
             .then(response => response.json())
             .then(budget => {
                 alert('Registration successful!');
+                // Close the modal
+                const modal = document.getElementById('registerModal'); // Adjust ID based on your modal
+                if (modal) {
+                    const bootstrapModal = new bootstrap.Modal(modal);
+                    bootstrapModal.hide();
+                }
                 // Optionally handle successful registration (e.g., redirect to login)
             })
             .catch(error => console.error('Error:', error));
