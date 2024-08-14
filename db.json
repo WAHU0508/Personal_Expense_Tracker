@@ -7,7 +7,8 @@
       "password": "password123",
       "expenses": [
         "da24",
-        "06f2"
+        "06f2",
+        "3bd1"
       ],
       "budget": "1"
     },
@@ -21,7 +22,7 @@
     },
     {
       "id": "_yy1ndkifv",
-      "name": "Ian ",
+      "name": "Ian",
       "email": "gridge3@gmail.com",
       "password": "123",
       "expenses": [],
@@ -48,9 +49,26 @@
     {
       "id": "3bd1",
       "category": "Entertainment",
-      "description": "spotify ",
+      "description": "spotify",
       "amount": "500",
-      "date": "2024-08-02"
+      "date": "2024-08-02",
+      "userId": "1"
+    },
+    {
+      "id": "25ae",
+      "category": "Transport",
+      "description": "town ",
+      "amount": "400",
+      "date": "2024-08-14",
+      "userId": "2"
+    },
+    {
+      "id": "62d5",
+      "category": "Entertainment",
+      "description": "movies",
+      "amount": "1500",
+      "date": "2024-08-14",
+      "userId": "_yy1ndkifv"
     }
   ],
   "budget": [

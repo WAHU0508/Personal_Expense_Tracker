@@ -1,13 +1,11 @@
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const name = document.getElementById('loginName').value;
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
 
-    console.log('Attempting to log in with:', { name, email, password });
+    console.log('Attempting to log in with:', { email, password });
 
-    // Fetch users from db.json
     fetch('http://localhost:3000/users')
         .then(response => response.json())
         .then(users => {
@@ -29,7 +27,6 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         });
 });
 
-// Load expenses for the logged-in user
 function loadUserExpenses(userId) {
     fetch('http://localhost:3000/expenses')
         .then(response => response.json())
@@ -43,19 +40,62 @@ function loadUserExpenses(userId) {
         });
 }
 
+// Ensure that the expenseList element exists
+function ensureExpenseList() {
+    const expenseTable = document.getElementById('expensesTable');
+    
+    if (!expenseTable) {
+        console.error('Error: Expenses table container element does not exist.');
+        return null;
+    }
+    
+    let expenseList = document.querySelector('#expensesTable table tbody');
+    
+    if (!expenseList) {
+        // Create the element if it does not exist
+        expenseList = document.createElement('tbody');
+        document.querySelector('#expensesTable table').appendChild(expenseList);
+    }
+    return expenseList;
+}
+
 // Function to display expenses
 function displayExpenses(expenses) {
-    const expenseList = document.getElementById('expenseList');
+    const expenseList = ensureExpenseList();
+    
+    if (!expenseList) {
+        console.error('Error: Could not get or create expenseList.');
+        return;
+    }
+    
     expenseList.innerHTML = ''; // Clear any previous expenses
 
     expenses.forEach(expense => {
-        const expenseItem = document.createElement('li');
-        expenseItem.textContent = `${expense.category}: ${expense.description} - $${expense.amount}`;
+        const expenseItem = document.createElement('tr');
+        expenseItem.innerHTML = `
+            <td><input type="checkbox"></td>
+            <td>${expense.category}</td>
+            <td>${expense.description}</td>
+            <td>$${expense.amount}</td>
+            <td>${expense.date}</td>
+        `;
         expenseList.appendChild(expenseItem);
     });
 }
 
-// Handle logout functionality
+// Example usage of loadUserExpenses
+function loadUserExpenses(userId) {
+    fetch('http://localhost:3000/expenses')
+        .then(response => response.json())
+        .then(expenses => {
+            console.log('Fetched expenses:', expenses);
+            const userExpenses = expenses.filter(expense => expense.userId === userId);
+            displayExpenses(userExpenses);
+        })
+        .catch(error => {
+            console.error('Error fetching expenses:', error);
+        });
+}
 function logout() {
     localStorage.removeItem('currentUser');
     document.getElementById('loginForm').style.display = 'block';
@@ -64,13 +104,33 @@ function logout() {
     location.reload();
 }
 
-// Check if user is logged in
 document.addEventListener('DOMContentLoaded', function() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (currentUser) {
+
+    if (currentUser && currentUser.id) {
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('logoutButton').style.display = 'block';
         alert(`Welcome back, ${currentUser.name}!`);
         loadUserExpenses(currentUser.id);
+    } else {
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('logoutButton').style.display = 'none';
+        alert('Please log in to continue.');
+    }
+});
+
+// Check if user is logged in
+document.addEventListener('DOMContentLoaded', function() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (currentUser && currentUser.id) {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('logoutButton').style.display = 'block';
+        alert(`Welcome back, ${currentUser.name}!`);
+        loadUserExpenses(currentUser.id);
+    } else {
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('logoutButton').style.display = 'none';
+        alert('Please log in to continue.');
     }
 });

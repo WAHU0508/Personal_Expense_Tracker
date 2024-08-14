@@ -179,45 +179,62 @@ document.addEventListener('DOMContentLoaded', () => {
         updateChart(); // Update the chart after displaying expenses
     }
 
-    // Handle expense form submission
-    function handleSubmit(event) {
-        event.preventDefault();
-        const categorySelect = document.getElementById('formSelect');
-        const category = categorySelect.options[categorySelect.selectedIndex].text;
-        const description = document.getElementById('description').value;
-        const amount = document.getElementById('amount').value;
-        const date = document.getElementById('date').value;
+  // Check if the user is logged in
+function isUserLoggedIn() {
+    return !!localStorage.getItem('currentUser');
+}
 
-        const newExpense = {
-            category,
-            description,
-            amount,
-            date,
-        };
+// Handle form submission to add an expense
+function handleSubmit(event) {
+    event.preventDefault();
 
-        postExpense(newExpense);
-        addExpenseForm.reset();
+    if (!isUserLoggedIn()) {
+        alert('User is not logged in. Please log in to add expenses.');
+        return;
     }
 
-    // Post new expense to server
-    function postExpense(newExpense) {
-        fetch('http://localhost:3000/expenses', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(newExpense)
-        })
-            .then(res => res.json())
-            .then(expense => {
-                expenses.push(expense); // Add new expense to local array
-                displayExpenses();
-                updateSummary(); // Update summary after adding new expense
-            })
-            .catch(error => console.error(`Posting Error: ${error}`));
-    }
+    const categorySelect = document.getElementById('formSelect');
+    const category = categorySelect.options[categorySelect.selectedIndex].text;
+    const description = document.getElementById('description').value;
+    const amount = document.getElementById('amount').value;
+    const date = document.getElementById('date').value;
 
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const userId = currentUser.id;
+
+    const newExpense = {
+        category,
+        description,
+        amount,
+        date,
+        userId,
+    };
+
+    postExpense(newExpense);
+    addExpenseForm.reset();
+}
+
+// Post new expense to server
+function postExpense(newExpense) {
+    fetch('http://localhost:3000/expenses', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(newExpense)
+    })
+    .then(res => res.json())
+    .then(expense => {
+        expenses.push(expense);
+        displayExpenses();
+        updateSummary();
+    })
+    .catch(error => console.error(`Posting Error: ${error}`));
+}
+
+
+    
     // Create a table row for an expense
     function createExpenseRow(expense) {
         const row = document.createElement('tr');
