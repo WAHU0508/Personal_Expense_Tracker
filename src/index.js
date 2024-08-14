@@ -30,25 +30,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch expenses from server
     function fetchExpenses() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         fetch('http://localhost:3000/expenses')
             .then(res => res.json())
             .then(data => {
-                expenses = data; // Store the fetched data
+                expenses = data.filter(expense => expense.userId === currentUser.id); // Filter by user ID
                 displayExpenses();
                 updateSummary();
             })
             .catch(error => console.error(`Fetching Error: ${error}`));
     }
-
-    // Calculate total expenditure and get total expenses filtered by category
+    
     function totalExpenditure(category = null) {
         return new Promise((resolve, reject) => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             fetch('http://localhost:3000/expenses')
                 .then(res => res.json())
                 .then(data => {
-                    let filteredExpenses = data;
+                    let filteredExpenses = data.filter(expense => expense.userId === currentUser.id); // Filter by user ID
                     if (category !== null) {
-                        filteredExpenses = data.filter(expense => expense.category === category);
+                        filteredExpenses = filteredExpenses.filter(expense => expense.category === category);
                     }
                     const total = filteredExpenses.reduce((acc, expense) => acc + parseFloat(expense.amount), 0);
                     resolve(total);

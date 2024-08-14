@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = new bootstrap.Modal(document.getElementById('recordsModal'));
     const recordsContent = document.getElementById('recordsContent');
     const summaryDropdownMenu = document.getElementById('summaryDropdownMenu');
-  
+
+    // Fetch current user from localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
     // When the user clicks the button, open the modal
     recordsButton.addEventListener('click', () => {
         modal.show();
@@ -53,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const filteredRecords = data.filter(record => {
                     const recordDate = new Date(record.date);
                     const recordMonth = recordDate.toLocaleString('default', { month: 'long', year: 'numeric' });
-                    return recordMonth === month;
+                    return recordMonth === month && record.userId === currentUser.id; // Filter by user ID
                 });
                 displayRecords(filteredRecords);
             })
